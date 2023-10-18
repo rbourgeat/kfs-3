@@ -6,7 +6,7 @@
 /*   By: rbourgea <rbourgea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:29:20 by rbourgea          #+#    #+#             */
-/*   Updated: 2023/10/18 12:46:57 by rbourgea         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:09:24 by rbourgea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ void colrow_init(void)
 
 void	kmain()
 {
+	init_paging();
 	colrow_init();
 	terminal_initialize(-1);
 	// khexdump(0x00000800, 10);
@@ -139,7 +140,7 @@ void	kmain()
 	enable_interrupts();
 
 	// khexdump(0x000007c0, 100);
-
+	
 	kprompt(0);
 	while(42);
 }

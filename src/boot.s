@@ -1,8 +1,18 @@
 bits 32
+
+global page_directory_first_entry:data
+global page_table_first_entry:data
+
 section .multiboot
 	dd 0x1BADB002	; Magic number
 	dd 0x0			; Flags
 	dd - (0x1BADB002 + 0x0)	; Checksum
+
+section .tables nobits alloc noexec write align=4096
+page_directory_first_entry:
+	resb 4096
+page_table_first_entry:
+	resb 4096
 
 global stack_bottom
 global stack_top
@@ -100,10 +110,10 @@ ioport_out:
 print_char_with_asm:
 	; OFFSET = (ROW * 80) + COL
 	mov eax, [esp + 8] 		; eax = row
-	mov edx, 80			; 80 (number of cols per row)
-	mul edx				; now eax = row * 80
-	add eax, [esp + 12] 		; now eax = row * 80 + col
-	mov edx, 2			; * 2 because 2 bytes per char on screen
+	mov edx, 80				; 80 (number of cols per row)
+	mul edx					; now eax = row * 80
+	add eax, [esp + 12]		; now eax = row * 80 + col
+	mov edx, 2				; * 2 because 2 bytes per char on screen
 	mul edx
 	mov edx, 0xb8000		; vid mem start in edx
 	add edx, eax			; Add our calculated offset
@@ -112,8 +122,8 @@ print_char_with_asm:
 	ret
 
 start:
-	mov esp, stack_space        	; set stack pointer
-	cli				; Disable interrupts
+	mov esp, stack_space	; set stack pointer
+	cli						; Disable interrupts
 	mov esp, stack_space
 	call kmain
 	hlt

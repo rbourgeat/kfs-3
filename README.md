@@ -1,9 +1,9 @@
 ![kfs-3](/images/screen-1.png)
 
-# [kfs-2](https://github.com/rbourgeat/kfs-2) 👈🏻 ✅ kfs-3
+# [kfs-2](https://github.com/rbourgeat/kfs-2) 👈🏻 kfs-3
 Third Kernel from Scratch project. Learn how to manage the memory in you kernel.
 
-> Assembly code is in **Intel syntax** not in AT&T syntax
+> Assembly code is in **Intel syntax** not in AT&T syntax.
 
 🐧 Linux and 🍏 Mac
 

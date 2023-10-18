@@ -6,7 +6,7 @@
 /*   By: rbourgea <rbourgea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:59:25 by user42            #+#    #+#             */
-/*   Updated: 2023/10/18 13:04:23 by rbourgea         ###   ########.fr       */
+/*   Updated: 2023/10/18 15:18:22 by rbourgea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,15 @@ extern int		tty_nb;
 extern int		tty_pos;
 extern int		tty_prompt_pos;
 extern char		ttys[10][256][256];
-extern size_t		ttys_row[10];
-extern size_t		ttys_column[10];
+extern size_t	ttys_row[10];
+extern size_t	ttys_column[10];
 
 extern int		keycodemode;
+
+extern uint32_t	endkernel;
+
+extern uint32_t page_directory_first_entry;
+extern uint32_t page_table_first_entry;
 
 /* ************************************************************************** */
 /* boots.s functions                                                          */
@@ -153,5 +158,8 @@ void	khexdump(uint32_t addr, int limit);
 
 // gdt.c
 void	init_gdt();
+
+// paging.c
+void	init_paging();
 
 #endif
