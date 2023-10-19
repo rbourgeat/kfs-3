@@ -8,6 +8,15 @@ section .multiboot
 	dd 0x0			; Flags
 	dd - (0x1BADB002 + 0x0)	; Checksum
 
+section .bootstrap.bss nobits alloc noexec write align=4
+	align 16
+	resb 16384					;; temp stack
+	global stack_top:data
+	stack_top:
+	global max_addr:data
+	max_addr:
+	resb 4
+
 section .tables nobits alloc noexec write align=4096
 page_directory_first_entry:
 	resb 4096
@@ -32,10 +41,16 @@ global enable_interrupts
 global load_gdt
 global loadPageDirectory
 global enablePaging
+global refresh_map
 
 ; .c functions
 extern kmain
 extern handle_keyboard_interrupt
+
+refresh_map:
+	mov ecx, cr3
+	mov cr3, ecx
+	ret
 
 enablePaging:
 	push ebp

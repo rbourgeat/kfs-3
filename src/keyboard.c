@@ -6,7 +6,7 @@
 /*   By: rbourgea <rbourgea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 15:54:31 by user42            #+#    #+#             */
-/*   Updated: 2022/06/26 17:15:20 by rbourgea         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:26:51 by rbourgea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	handle_keyboard_interrupt()
 		char keycode = ioport_in(KEYBOARD_DATA_PORT);
 		if (keycode < 0 || keycode >= 128)
 			return;
-		if (keycodemode == 0 || !keycodemode)
+		if (keycodemode != 1)
 			kprompt(keyboard_map[keycode]);
 		else
 			printk("[%d] ", keycode);

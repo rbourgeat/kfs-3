@@ -6,7 +6,7 @@
 /*   By: rbourgea <rbourgea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:58:54 by user42            #+#    #+#             */
-/*   Updated: 2022/06/25 13:36:00 by rbourgea         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:31:24 by rbourgea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,24 @@ char	*kstrjoin(char const *s1, char const *s2)
 	return (tab);
 }
 
+void kputuint(unsigned int num) {
+    char buffer[11];
+
+    int i = 10;
+    buffer[i] = '\0';
+
+    if (num == 0) {
+        buffer[--i] = '0';
+    } else {
+        while (num != 0) {
+            buffer[--i] = '0' + (num % 10);
+            num /= 10;
+        }
+    }
+
+    kputstr(&buffer[i]);
+}
+
 void	printk(char *str, ...)
 {
 	int	*nb_args;
@@ -186,6 +204,15 @@ void	printk(char *str, ...)
 				}
 				kputnbr(*nb_args++);
 			}
+			else if (args[i] == 'u') {
+                if (zero_padding > 0) {
+                    while (zero_padding - kintlen(*nb_args)) {
+                        kputchar('0');
+                        zero_padding--;
+                    }
+                }
+                kputuint(*nb_args++);
+            }
 			else {
 				kputchar('%');
 				kputchar(args[i]);
@@ -282,4 +309,13 @@ void	khexdump(uint32_t addr, int limit)
 	}
 	printk("\n");
 	kcolor(VGA_COLOR_WHITE);
+}
+
+void	kbzero(void *s, size_t n)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < n)
+		((unsigned char *)s)[i++] = 0;
 }

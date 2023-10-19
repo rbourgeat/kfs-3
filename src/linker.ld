@@ -6,9 +6,18 @@ SECTIONS
 {
 	. = 1M;
 
+	.bootstrap.data ALIGN(4K) : {
+		*(.multiboot)
+		*(.bootstrap.data)
+	}
+
+	.bootstrap.bss ALIGN(4k) : {
+		*(.tables)
+		*(.bootstrap.bss)
+	}
+
 	.text BLOCK(4K) : ALIGN(4K)
 	{
-		*(.multiboot)
 		*(.text)
 	}
 
@@ -20,6 +29,8 @@ SECTIONS
 	.bss BLOCK(4K) : ALIGN(4K)
 	{
 		*(.bss)
-		endkernel = .;
 	}
+
+	. = ALIGN(4K);
+	PROVIDE(kernel_end = .);
 }

@@ -5,6 +5,22 @@ Third Kernel from Scratch project. Learn how to manage the memory in you kernel.
 
 > Assembly code is in **Intel syntax** not in AT&T syntax.
 
+## Mandatory part
+
+- [x] You must enable memory paging in your Kernel
+
+- [x] You must code a memory structure that handle paging and memory rights
+
+- [x] You must define Kernel and User space
+
+- [ ] You must implement a function to create / get memory pages
+
+- [ ] You must implement functions to allocate, free and get size of a variable.
+
+- [ ] You must implement those functions for virtual and physical memory
+
+- [ ] You must handle "kernel panics" (Print, stop the kernel)
+
 🐧 Linux and 🍏 Mac
 
 ## 📖 Kernel Bible

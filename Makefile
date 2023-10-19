@@ -6,7 +6,7 @@
 #    By: rbourgea <rbourgea@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/04/24 16:00:27 by rbourgea          #+#    #+#              #
-#    Updated: 2023/10/18 14:55:23 by rbourgea         ###   ########.fr        #
+#    Updated: 2023/10/18 16:36:56 by rbourgea         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,9 +33,9 @@ ISO_OUT		=	build/rbourgea_kfs.iso
 
 BOOT		=	src/boot.s
 SRC_PATH	=	src/
-SRC_NAME	=	kernel.c libk.c keyboard.c prompt.c gdt.c paging.c
+SRC_NAME	=	kernel.c libk.c keyboard.c prompt.c gdt.c paging.c memory.c
 SRC			=	$(addprefix $(SRC_PATH), $(SRC_NAME))
-OBJ			=	boot.o kernel.o libk.o keyboard.o prompt.o gdt.o paging.o
+OBJ			=	boot.o kernel.o libk.o keyboard.o prompt.o gdt.o paging.o memory.o
 LINKER		=	src/linker.ld
 
 FLAGS		=	-fno-builtin -fno-builtin -fno-builtin -nostdlib -nodefaultlibs

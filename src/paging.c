@@ -6,7 +6,7 @@
 /*   By: rbourgea <rbourgea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 12:47:47 by rbourgea          #+#    #+#             */
-/*   Updated: 2023/10/18 15:23:39 by rbourgea         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:18:39 by rbourgea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,4 @@ void init_paging() {
 	
 	loadPageDirectory(page_directory);
 	enablePaging();
-}
-
-void create_memory_page() {
-
-}
-
-void get_memory_page() {
-
-}
-
-void kalloc() {
-
-}
-
-void kfree() {
-
-}
-
-void kget() {
-
 }

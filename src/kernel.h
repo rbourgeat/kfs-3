@@ -6,7 +6,7 @@
 /*   By: rbourgea <rbourgea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:59:25 by user42            #+#    #+#             */
-/*   Updated: 2023/10/18 15:18:22 by rbourgea         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:22:22 by rbourgea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@
 # define KEYBOARD_STATUS_PORT 0x64
 
 # pragma GCC diagnostic ignored "-Waddress-of-packed-member"
+
+# define PAGE_OFFSET	0xC0000000
+# define PAGE_SIZE		4096
+# define LOW_MEM		0
+# define VMALLOC		1
+# define MAX_ADDR *(uint32_t *)((void *)&max_addr + PAGE_OFFSET)
+# define PHISYCAL_KE ((uint32_t)&kernel_end - PAGE_OFFSET)
 
 /* ************************************************************************** */
 /* Structs                                                                    */
@@ -103,10 +110,17 @@ extern size_t	ttys_column[10];
 
 extern int		keycodemode;
 
-extern uint32_t	endkernel;
+extern unsigned char	kernel_end;
+extern uint32_t			max_addr;
+extern uint32_t 		page_directory_first_entry;
+extern uint32_t 		page_table_first_entry;
 
-extern uint32_t page_directory_first_entry;
-extern uint32_t page_table_first_entry;
+static unsigned char	*bitmask = &kernel_end;
+static uint32_t			bm_size;
+static uint32_t			*tables;
+static void				*heap_start;
+static void				*heap_end;
+static void				*vmalloc_end;
 
 /* ************************************************************************** */
 /* boots.s functions                                                          */
@@ -120,6 +134,7 @@ extern void load_idt(unsigned int* idt_address);
 extern void enable_interrupts();
 extern void loadPageDirectory(unsigned int*);
 extern void enablePaging();
+extern void	refresh_map();
 
 /* ************************************************************************** */
 /* Functions                                                                  */
@@ -138,6 +153,7 @@ char*	kstrjoin(char const *s1, char const *s2);
 int	kstrcmp(const char *s1, const char *s2);
 size_t	kstrlen(const char* str);
 void	printk(char *str, ...);
+void	kbzero(void *s, size_t n);
 
 // keyboard.c
 void	kb_init();
@@ -161,5 +177,11 @@ void	init_gdt();
 
 // paging.c
 void	init_paging();
+
+// memory.c
+void	init_memory();
+void	*get_heap_start();
+void	*get_heap_end();
+void	*get_vmalloc_end();
 
 #endif

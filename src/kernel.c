@@ -6,7 +6,7 @@
 /*   By: rbourgea <rbourgea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:29:20 by rbourgea          #+#    #+#             */
-/*   Updated: 2023/10/18 15:09:24 by rbourgea         ###   ########.fr       */
+/*   Updated: 2023/10/19 13:05:11 by rbourgea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	khello(void)
 	kcolor(VGA_COLOR_WHITE);
 }
 
-void colrow_init(void)
+void init_colrow(void)
 {
 	for (int i = 0; i < 10; i++)
 	{
@@ -127,12 +127,13 @@ void colrow_init(void)
 
 void	kmain()
 {
-	init_paging();
-	colrow_init();
+	init_colrow();
 	terminal_initialize(-1);
+	khello();
+	init_paging();
+	init_memory();
 	// khexdump(0x00000800, 10);
 	init_gdt();
-	khello();
 	// printk(" \11 %s, %d%c\n\n", "Hello", 42, '!');
 
 	init_idt();
