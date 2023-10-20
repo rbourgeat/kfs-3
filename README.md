@@ -13,9 +13,9 @@ Third Kernel from Scratch project. Learn how to manage the memory in you kernel.
 
 - [x] You must define Kernel and User space
 
-- [ ] You must implement a function to create / get memory pages
+- [x] You must implement a function to create / get memory pages
 
-- [ ] You must implement functions to allocate, free and get size of a variable.
+- [x] You must implement functions to allocate, free and get size of a variable.
 
 - [ ] You must implement those functions for virtual and physical memory
 
