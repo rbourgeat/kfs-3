@@ -6,7 +6,7 @@
 /*   By: rbourgea <rbourgea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:33:57 by rbourgea          #+#    #+#             */
-/*   Updated: 2023/10/19 15:48:12 by rbourgea         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:47:27 by rbourgea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,6 @@ void	*get_heap_end()
 	return (heap_end);
 }
 
-void	*get_vmalloc_end()
-{
-	return (vmalloc_end);
-}
-
 /*
 	the first 256 MB of physical memory is mapped to 
 	the virtual address range 0xC0000000 - 0xD0000000 (HIGH_MEM). 
@@ -68,16 +63,11 @@ static void	intital_map()
 void	init_memory() {
 	uint32_t frames_in_use;
 
-	kcolor(VGA_COLOR_LIGHT_GREY);
-	printk("\nSize of ph. memory (page aligned) = %x\n", align(MAX_ADDR, PAGE_SIZE));
 	bm_size = align(MAX_ADDR, PAGE_SIZE) / PAGE_SIZE / 8;
-	printk("Size of bit bitmask array %u bytes\n", bm_size);
-
 	frames_in_use = PHISYCAL_KE / PAGE_SIZE + align(bm_size, PAGE_SIZE) / PAGE_SIZE;
 	tables = (uint32_t *)(frames_in_use * PAGE_SIZE + PAGE_OFFSET);
 	heap_start = (void *)((frames_in_use + 128) * PAGE_SIZE + PAGE_OFFSET);
 	heap_end = (void *)0xD0000000;
-	vmalloc_end = (void *)0xE0000000;
 	intital_map();
 	kbzero(bitmask, bm_size);
 	for (uint32_t i = 0; i < frames_in_use + 128 ; i++) {

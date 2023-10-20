@@ -6,7 +6,7 @@
 /*   By: rbourgea <rbourgea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 14:59:25 by user42            #+#    #+#             */
-/*   Updated: 2023/10/19 15:22:22 by rbourgea         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:47:57 by rbourgea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@
 # define PAGE_OFFSET	0xC0000000
 # define PAGE_SIZE		4096
 # define LOW_MEM		0
-# define VMALLOC		1
 # define MAX_ADDR *(uint32_t *)((void *)&max_addr + PAGE_OFFSET)
 # define PHISYCAL_KE ((uint32_t)&kernel_end - PAGE_OFFSET)
+# define MAX_SIZE_LIMIT 0x000400000
 
 /* ************************************************************************** */
 /* Structs                                                                    */
@@ -85,6 +85,13 @@ enum vga_color {
 	VGA_COLOR_WHITE = 15,
 };
 
+typedef struct s_block {
+	void		*next;
+	void		*prev;
+	uint32_t	status;
+	uint32_t	size;
+} t_block;
+
 /* ************************************************************************** */
 /* Globals                                                                    */
 /* ************************************************************************** */
@@ -120,7 +127,8 @@ static uint32_t			bm_size;
 static uint32_t			*tables;
 static void				*heap_start;
 static void				*heap_end;
-static void				*vmalloc_end;
+
+static t_block *block_list;
 
 /* ************************************************************************** */
 /* boots.s functions                                                          */
@@ -142,7 +150,7 @@ extern void	refresh_map();
 
 // libk.c
 void    kputnbr(int n);
-int	kintlen(int n);
+int		kintlen(int n);
 void	kputchar(char c);
 void	kitoa(int n, char *str);
 void	kputstr(const char* data);
@@ -150,7 +158,7 @@ void	khexdump(uint32_t addr, int limit);
 void*	kmemset(void *b, int c, unsigned int len);
 void	hex_to_str(unsigned int addr, char *result, int size);
 char*	kstrjoin(char const *s1, char const *s2);
-int	kstrcmp(const char *s1, const char *s2);
+int		kstrcmp(const char *s1, const char *s2);
 size_t	kstrlen(const char* str);
 void	printk(char *str, ...);
 void	kbzero(void *s, size_t n);
@@ -179,9 +187,23 @@ void	init_gdt();
 void	init_paging();
 
 // memory.c
-void	init_memory();
-void	*get_heap_start();
-void	*get_heap_end();
-void	*get_vmalloc_end();
+uint32_t	align(uint32_t addr, uint32_t boundary);
+void		init_memory();
+void		*get_heap_start();
+void		*get_heap_end();
+uint32_t	get_bitmask_size();
+unsigned char*	get_bitmask();
+
+// page.c
+void	*get_page(uint32_t flags, uint32_t nbr);
+
+// frame.c
+void	*get_frames(void *start, void *end, uint32_t frames);
+void	free_frame(void* addr);
+
+// kmalloc.c
+void		kfree(void *ptr);
+void		*kmalloc(uint32_t size);
+uint32_t	get_memory_block_size(void *ptr);
 
 #endif

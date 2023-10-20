@@ -28,6 +28,8 @@ https://wiki.osdev.org/Main_Page
 
 ## 💾 Paging
 https://wiki.osdev.org/Setting_Up_Paging
+https://wiki.osdev.org/Paging
+https://wiki.osdev.org/Writing_A_Page_Frame_Allocator
 
 ## 📚 Good Tutorial
 https://samypesse.gitbook.io/how-to-create-an-operating-system

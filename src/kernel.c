@@ -6,7 +6,7 @@
 /*   By: rbourgea <rbourgea@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/16 16:29:20 by rbourgea          #+#    #+#             */
-/*   Updated: 2023/10/19 13:05:11 by rbourgea         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:44:07 by rbourgea         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,15 @@ void init_colrow(void)
 	}
 }
 
+void kmalloc_proof()
+{
+	int *test = kmalloc(4080);
+	*test = 42;
+	printk("\ntest = %u\n", *test);
+	printk("sizeof test = %u\n", get_memory_block_size(test));
+	kfree(test);
+}
+
 void	kmain()
 {
 	init_colrow();
@@ -139,6 +148,8 @@ void	kmain()
 	init_idt();
 	kb_init();
 	enable_interrupts();
+	
+	kmalloc_proof();
 
 	// khexdump(0x000007c0, 100);
 	

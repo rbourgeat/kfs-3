@@ -137,11 +137,10 @@ print_char_with_asm:
 	ret
 
 start:
-	mov esp, stack_space	; set stack pointer
-	cli						; Disable interrupts
-	mov esp, stack_space
-	call kmain
-	hlt
+	cli                     ; Disable interrupts
+	mov esp, stack_space    ; Set stack pointer
+	call kmain              ; Call your kernel's main function
+	hlt                     ; Halt the CPU (optional)
 
 section .bss
 resb 8192			; 8KB for stack
